@@ -10,7 +10,7 @@ import (
 	"github.com/shawhull/gling"
 )
 
-//var sockFilename = "@actord"	// allso possible
+//var sockFilename = "@actord"	// abstract socket path is also possible (Linux only)
 var sockFilename = "/tmp/gling_socket"
 
 func main() {

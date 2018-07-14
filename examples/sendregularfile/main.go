@@ -5,6 +5,8 @@ import (
 	"net"
 	"sync"
 	"fmt"
+
+	"github.com/shawhull/gling"
 )
 
 var sockFilename = "/tmp/gling_socket"
@@ -31,7 +33,7 @@ func main() {
 	}
 	defer conn.Close()
 	listenConn := conn.(*net.UnixConn)
-	if err = SendFileDescriptor(listenConn, f); err != nil {
+	if err = gling.SendFileDescriptor(listenConn, f); err != nil {
 		panic(err)
 	}
 	waitGroup.Wait()
@@ -47,7 +49,7 @@ func getFileDescriptor(waitGroup *sync.WaitGroup) {
 	sendFdConn := c.(*net.UnixConn)
 
 	var files []*os.File
-	files, err = ReceiveFileDescriptor(sendFdConn, 1, []string{"sentFile"})
+	files, err = gling.ReceiveFileDescriptor(sendFdConn, 1, []string{"sentFile"})
 	if err != nil {
 		panic(err)
 	}
